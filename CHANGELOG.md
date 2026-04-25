@@ -5,6 +5,12 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.0.1](https://github.com/HyperCubeSphere/release/compare/v1.0.0...v1.0.1) (2026-04-25)
+
+### 🔁 Continuous Integration
+
+* remove npm token in favour of secure publishing ([23ac0c2](https://github.com/HyperCubeSphere/release/commit/23ac0c2a53ca80736e3eceaaab964236794686ab))
+
 ## 1.0.0 (2026-04-25)
 
 ### 🍕 Features
