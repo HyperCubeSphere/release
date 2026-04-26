@@ -5,6 +5,12 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.0.2](https://github.com/HyperCubeSphere/release/compare/v1.0.1...v1.0.2) (2026-04-26)
+
+### 🤖 Build System
+
+* use new hypercubesphere commitizen ([caa65bb](https://github.com/HyperCubeSphere/release/commit/caa65bb7365123f0928b4725a3e95a3ebebd4607))
+
 ## [1.0.1](https://github.com/HyperCubeSphere/release/compare/v1.0.0...v1.0.1) (2026-04-25)
 
 ### 🔁 Continuous Integration
