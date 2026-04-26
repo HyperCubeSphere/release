@@ -36,10 +36,10 @@
     "semantic-release-replace-plugin": "^1.2.7"
   },
   "devDependencies": {
-    "@tmcb/conventional-commit": "^1.0.0"
+    "@hypercubesphere/conventional-commit": "^1.0.1"
   },
   "scripts": {
-    "push": "npx @tmcb/conventional-commit"
+    "push": "npx @hypercubesphere/conventional-commit"
   },
   "publishConfig": {
     "access": "public"
