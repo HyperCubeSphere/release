@@ -194,7 +194,15 @@ if (pythonExists && SR_DISABLE_PYTHON === undefined) {
             "uv.lock"
           ],
           "from": `(\\[\\[package\\]\\]\\nname = "${escapedName}"\\nversion = ")[^"]*(")`,
-          "to": `$1<%= nextRelease.version.replace(/-(alpha|beta|rc)\\.?(\\d*)/i, function(m, p, n) { return ({alpha:"a", beta:"b", rc:"rc"})[p.toLowerCase()] + (n || "0"); }) %>$2`,
+          "to": (...args) => {
+            const context = args[args.length - 1];
+            const [, prefix, suffix] = args;
+            const pep440 = context.nextRelease.version.replace(
+              /-(alpha|beta|rc)\.?(\d*)/i,
+              (_m, label, num) => ({ alpha: "a", beta: "b", rc: "rc" })[label.toLowerCase()] + (num || "0")
+            );
+            return `${prefix}${pep440}${suffix}`;
+          },
           "results": [{
             "file": "uv.lock",
             "hasChanged": true,
