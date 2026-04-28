@@ -5,6 +5,12 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.0.3](https://github.com/HyperCubeSphere/release/compare/v1.0.2...v1.0.3) (2026-04-28)
+
+### 🐛 Bug Fixes
+
+* correct python uv replace mechanism ([4aa7a83](https://github.com/HyperCubeSphere/release/commit/4aa7a83ceac9d099e2c5122714cf189361a12449))
+
 ## [1.0.2](https://github.com/HyperCubeSphere/release/compare/v1.0.1...v1.0.2) (2026-04-26)
 
 ### 🤖 Build System
