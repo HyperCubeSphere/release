@@ -7,7 +7,7 @@
 
 > now available as a [GitHub Marketplace action](https://github.com/marketplace/actions/hypercubesphere-release)
 
-> works with node, deno and python
+> works with node, deno, python and google chrome extension
 
 [![Commits](https://img.shields.io/github/commit-activity/w/HyperCubeSphere/release?style=flat)](https://github.com/HyperCubeSphere/release/pulse)
 [![Issues](https://img.shields.io/github/issues/HyperCubeSphere/release.svg?style=flat)](https://github.com/HyperCubeSphere/release/issues)
