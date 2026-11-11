@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.1.1](https://github.com/HyperCubeSphere/release/compare/v1.1.0...v1.1.1) (2026-11-11)
+
+### 🐛 Bug Fixes
+
+* correct conventional commits pin ([06d8516](https://github.com/HyperCubeSphere/release/commit/06d8516fd83dafea0dc20f5796a51a672707c220))
+* update github release package and semantic release deps ([9fbfa44](https://github.com/HyperCubeSphere/release/commit/9fbfa44484c2e4b36e4575c6ef254d73d3a35c1d))
+
 ## [1.1.0](https://github.com/HyperCubeSphere/release/compare/v1.0.4...v1.1.0) (2026-11-11)
 
 ### 📝 Documentation
