@@ -5,6 +5,12 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.1.2](https://github.com/HyperCubeSphere/release/compare/v1.1.1...v1.1.2) (2026-11-11)
+
+### 🔁 Continuous Integration
+
+* force github token permissions ([2e38687](https://github.com/HyperCubeSphere/release/commit/2e386875c7141c02f1a056bc5490097580862738))
+
 ## [1.1.1](https://github.com/HyperCubeSphere/release/compare/v1.1.0...v1.1.1) (2026-11-11)
 
 ### 🐛 Bug Fixes
