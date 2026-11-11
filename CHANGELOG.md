@@ -5,6 +5,12 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.0.4](https://github.com/HyperCubeSphere/release/compare/v1.0.3...v1.0.4) (2026-11-11)
+
+### 🐛 Bug Fixes
+
+* a release no longer fails when the version file already holds its version (EAI-475) ([#1](https://github.com/HyperCubeSphere/release/issues/1)) ([ba1d16c](https://github.com/HyperCubeSphere/release/commit/ba1d16c841155510140fdc9e751f7d7644ee3117))
+
 ## [1.0.3](https://github.com/HyperCubeSphere/release/compare/v1.0.2...v1.0.3) (2026-04-28)
 
 ### 🐛 Bug Fixes
