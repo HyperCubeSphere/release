@@ -5,6 +5,12 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.1.0](https://github.com/HyperCubeSphere/release/compare/v1.0.4...v1.1.0) (2026-11-11)
+
+### 📝 Documentation
+
+* update docs, trigger v1.0.5 container ([4ee8826](https://github.com/HyperCubeSphere/release/commit/4ee882633f354cbeabbf8d6a78ebd5c52aa1e47a))
+
 ## [1.0.4](https://github.com/HyperCubeSphere/release/compare/v1.0.3...v1.0.4) (2026-11-11)
 
 ### 🐛 Bug Fixes
