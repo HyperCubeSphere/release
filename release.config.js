@@ -1,4 +1,4 @@
-const { existsSync } = require("node:fs");
+const { existsSync, readFileSync } = require("node:fs");
 const { execSync } = require('node:child_process');
 const log = require("npmlog");
 
@@ -131,42 +131,37 @@ if (pkgExists && SR_DISABLE_NPM === undefined) {
   });
 }
 
+const oneVersionLine = (file, pattern) => {
+  const found = (readFileSync(file, "utf8").match(new RegExp(pattern, "gm")) || []).length;
+  if (found !== 1) {
+    throw new Error(`${file} needs exactly one version line, found ${found}`);
+  }
+};
+
 const denoExists = existsSync("./deno.json");
 if (denoExists && SR_DISABLE_DENO === undefined) {
+  oneVersionLine("deno.json", `"version":.*".*"`);
   addPlugin("semantic-release-replace-plugin", {
     "replacements": [{
       "files": [
         "deno.json"
       ],
       "from": `"version":.*".*"`,
-      "to": `"version": "\${nextRelease.version}"`,
-      "results": [{
-        "file": "deno.json",
-        "hasChanged": true,
-        "numMatches": 1,
-        "numReplacements": 1
-      }],
-      "countMatches": true
+      "to": `"version": "\${nextRelease.version}"`
     }]
   });
 }
 
 const pythonExists = existsSync("./pyproject.toml");
 if (pythonExists && SR_DISABLE_PYTHON === undefined) {
+  oneVersionLine("pyproject.toml", `^version.*=.*".*"$`);
   addPlugin("semantic-release-replace-plugin", {
     "replacements": [{
       "files": [
         "pyproject.toml"
       ],
       "from": `^version.*=.*".*"$`,
-      "to": `version = "\${nextRelease.version}"`,
-      "results": [{
-        "file": "pyproject.toml",
-        "hasChanged": true,
-        "numMatches": 1,
-        "numReplacements": 1
-      }],
-      "countMatches": true
+      "to": `version = "\${nextRelease.version}"`
     }]
   });
 
