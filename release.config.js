@@ -1,4 +1,4 @@
-const { existsSync } = require("node:fs");
+const { existsSync, readFileSync } = require("node:fs");
 const { execSync } = require('node:child_process');
 const log = require("npmlog");
 
@@ -131,73 +131,84 @@ if (pkgExists && SR_DISABLE_NPM === undefined) {
   });
 }
 
+const hasVersionLine = (file, pattern) =>
+  (readFileSync(file, "utf8").match(new RegExp(pattern, "gm")) || []).length === 1;
+
 const denoExists = existsSync("./deno.json");
 if (denoExists && SR_DISABLE_DENO === undefined) {
-  addPlugin("semantic-release-replace-plugin", {
-    "replacements": [{
-      "files": [
-        "deno.json"
-      ],
-      "from": `"version":.*".*"`,
-      "to": `"version": "\${nextRelease.version}"`
-    }]
-  });
+  if (!hasVersionLine("deno.json", `"version":.*".*"`)) {
+    log.warn(`deno.json has no single "version" line, so its version is not updated`);
+  } else {
+    addPlugin("semantic-release-replace-plugin", {
+      "replacements": [{
+        "files": [
+          "deno.json"
+        ],
+        "from": `"version":.*".*"`,
+        "to": `"version": "\${nextRelease.version}"`
+      }]
+    });
+  }
 }
 
 const pythonExists = existsSync("./pyproject.toml");
 if (pythonExists && SR_DISABLE_PYTHON === undefined) {
-  addPlugin("semantic-release-replace-plugin", {
-    "replacements": [{
-      "files": [
-        "pyproject.toml"
-      ],
-      "from": `^version.*=.*".*"$`,
-      "to": `version = "\${nextRelease.version}"`
-    }]
-  });
+  if (!hasVersionLine("pyproject.toml", `^version.*=.*".*"$`)) {
+    log.warn(`pyproject.toml has no single version line, so its version is not updated`);
+  } else {
+    addPlugin("semantic-release-replace-plugin", {
+      "replacements": [{
+        "files": [
+          "pyproject.toml"
+        ],
+        "from": `^version.*=.*".*"$`,
+        "to": `version = "\${nextRelease.version}"`
+      }]
+    });
 
-  const uvLockExists = existsSync("./uv.lock");
-  if (uvLockExists) {
-    let pyProjectName;
-    try {
-      const pyproject = execSync(`cat pyproject.toml`, { encoding: "utf8", stdio: "pipe" });
-      const projectTable = pyproject.match(/\[project\]([\s\S]*?)(?=\n\[|$)/);
-      const nameMatch = projectTable && projectTable[1].match(/\n\s*name\s*=\s*"([^"]+)"/);
-      pyProjectName = nameMatch && nameMatch[1];
-    } catch (e) {
-      log.warn(`Unable to read package name from pyproject.toml`);
-      log.error(e);
-    }
+    const uvLockExists = existsSync("./uv.lock");
+    if (uvLockExists) {
+      let pyProjectName;
+      try {
+        const pyproject = execSync(`cat pyproject.toml`, { encoding: "utf8", stdio: "pipe" });
+        const projectTable = pyproject.match(/\[project\]([\s\S]*?)(?=\n\[|$)/);
+        const nameMatch = projectTable && projectTable[1].match(/\n\s*name\s*=\s*"([^"]+)"/);
+        pyProjectName = nameMatch && nameMatch[1];
+      } catch (e) {
+        log.warn(`Unable to read package name from pyproject.toml`);
+        log.error(e);
+      }
 
-    if (!pyProjectName) {
-      log.warn(`No package name found in pyproject.toml [project] table, skipping uv.lock update`);
-    } else {
-      log.info(`uv.lock update enabled for package "${pyProjectName}"`);
-      const escapedName = pyProjectName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      addPlugin("semantic-release-replace-plugin", {
-        "replacements": [{
-          "files": [
-            "uv.lock"
-          ],
-          "from": `(\\[\\[package\\]\\]\\nname = "${escapedName}"\\nversion = ")[^"]*(")`,
-          "to": (...args) => {
-            const context = args[args.length - 1];
-            const [, prefix, suffix] = args;
-            const pep440 = context.nextRelease.version.replace(
-              /-(alpha|beta|rc)\.?(\d*)/i,
-              (_m, label, num) => ({ alpha: "a", beta: "b", rc: "rc" })[label.toLowerCase()] + (num || "0")
-            );
-            return `${prefix}${pep440}${suffix}`;
-          },
-          "results": [{
-            "file": "uv.lock",
-            "hasChanged": true,
-            "numMatches": 1,
-            "numReplacements": 1
-          }],
-          "countMatches": true
-        }]
-      });
+      if (!pyProjectName) {
+        log.warn(`No package name found in pyproject.toml [project] table, skipping uv.lock update`);
+      } else {
+        log.info(`uv.lock update enabled for package "${pyProjectName}"`);
+        const escapedName = pyProjectName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        addPlugin("semantic-release-replace-plugin", {
+          "replacements": [{
+            "files": [
+              "uv.lock"
+            ],
+            "from": `(\\[\\[package\\]\\]\\nname = "${escapedName}"\\nversion = ")[^"]*(")`,
+            "to": (...args) => {
+              const context = args[args.length - 1];
+              const [, prefix, suffix] = args;
+              const pep440 = context.nextRelease.version.replace(
+                /-(alpha|beta|rc)\.?(\d*)/i,
+                (_m, label, num) => ({ alpha: "a", beta: "b", rc: "rc" })[label.toLowerCase()] + (num || "0")
+              );
+              return `${prefix}${pep440}${suffix}`;
+            },
+            "results": [{
+              "file": "uv.lock",
+              "hasChanged": true,
+              "numMatches": 1,
+              "numReplacements": 1
+            }],
+            "countMatches": true
+          }]
+        });
+      }
     }
   }
 }
