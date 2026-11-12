@@ -5,6 +5,12 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.1.3](https://github.com/HyperCubeSphere/release/compare/v1.1.2...v1.1.3) (2026-11-12)
+
+### 🐛 Bug Fixes
+
+* **deps:** bump eclass-docker-fork to 1.4.0 ([#2](https://github.com/HyperCubeSphere/release/issues/2)) ([303b512](https://github.com/HyperCubeSphere/release/commit/303b512fa7623b17742c296ff9a7611b512f3154))
+
 ## [1.1.2](https://github.com/HyperCubeSphere/release/compare/v1.1.1...v1.1.2) (2026-11-11)
 
 ### 🔁 Continuous Integration
